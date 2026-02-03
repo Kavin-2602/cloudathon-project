@@ -21,7 +21,7 @@ export default function CloudVMPanel() {
       }
     };
     fetchVMs();
-    const interval = setInterval(fetchVMs, 10000); // refresh every 10s
+    const interval = setInterval(fetchVMs, 1000); // refresh every 100s
     return () => clearInterval(interval);
   }, []);
 
