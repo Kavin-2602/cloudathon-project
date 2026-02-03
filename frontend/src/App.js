@@ -7,10 +7,18 @@ import SplashScreen from "./components/SplashScreen";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/app.css";
-import { io } from "socket.io-client";
+import socket from "../socket"; // adjust path if needed
 
-// Connect to backend Socket.IO server
-const socket = io("http://localhost:3000");
+useEffect(() => {
+  socket.on("welcome", (data) => {
+    console.log("✅ WebSocket connected:", data.message);
+  });
+
+  return () => {
+    socket.off("welcome");
+  };
+}, []);
+
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);

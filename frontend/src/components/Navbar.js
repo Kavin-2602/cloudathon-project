@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { toast } from "react-toastify";
+import socket from "../socket"; // adjust path if needed
+
+useEffect(() => {
+  socket.on("welcome", (data) => {
+    console.log("✅ WebSocket connected:", data.message);
+  });
+
+  return () => {
+    socket.off("welcome");
+  };
+}, []);
+
 
 export default function Navbar() {
   const [status, setStatus] = useState("Disconnected");
