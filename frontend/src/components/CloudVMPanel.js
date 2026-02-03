@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+// ✅ Use environment variable for backend URL
+const API_BASE = process.env.REACT_APP_BACKEND_URL;
+
 export default function CloudVMPanel() {
   const [vms, setVMs] = useState([]);
 
@@ -8,7 +11,7 @@ export default function CloudVMPanel() {
   useEffect(() => {
     const fetchVMs = async () => {
       try {
-        const res = await fetch("http://localhost:3000/vms/list");
+        const res = await fetch(`${API_BASE}/vms/list`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setVMs(data.vms || []);
@@ -25,13 +28,13 @@ export default function CloudVMPanel() {
   // Shutdown VM
   const shutdownVM = async (vmId) => {
     try {
-      const res = await fetch(`http://localhost:3000/vms/shutdown/${vmId}`, {
+      const res = await fetch(`${API_BASE}/vms/shutdown/${vmId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" }, // ✅ ensure JSON response
+        headers: { "Content-Type": "application/json" },
       });
 
       if (!res.ok) {
-        const text = await res.text(); // capture error page if not JSON
+        const text = await res.text();
         throw new Error(`HTTP ${res.status}: ${text}`);
       }
 
