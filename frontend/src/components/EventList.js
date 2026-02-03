@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import socket from "./socket"; // ✅ Only this line changed
+import socket from "../socket";
+
+
 
 export default function EventList() {
   const [logs, setLogs] = useState([]);
